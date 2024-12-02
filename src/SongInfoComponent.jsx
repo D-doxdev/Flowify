@@ -7,21 +7,21 @@ import AddIcon from "@mui/icons-material/Add";
 
 function SongInfoComponent({ firstName, lastName, gender }) {
   return (
-    <li className="mt-3 flex flex-row items-center bg-slate-300 px-5 py-3">
+    <li className="mt-3 flex flex-row items-center rounded-md border border-gray-100 border-opacity-5 bg-slate-300 bg-opacity-0 bg-clip-padding px-5 py-3 backdrop-blur-lg backdrop-filter">
       <div>
-        <h3 className="mb-3 text-xl">{firstName}</h3>
+        <h3 className="mb-3 text-xl text-slate-100">{firstName}</h3>
         <div className="flex flex-row items-center">
-          <span className="mr-1 text-sm text-gray-600">
+          <span className="mr-1 text-sm text-slate-300">
             <SpatialAudioIcon fontSize="small" />
           </span>
-          <h4 className="mr-2 text-gray-600">{lastName}</h4>
-          <span className="mr-1 text-gray-600">
+          <h4 className="mr-2 text-slate-300">{lastName}</h4>
+          <span className="mr-1 text-slate-300">
             <LibraryMusicIcon fontSize="small" />
           </span>
-          <h4 className="text-gray-600">{gender}</h4>
+          <h4 className="text-slate-300">{gender}</h4>
         </div>
       </div>
-      <button className="ml-auto">
+      <button className="ml-auto text-slate-300">
         <AddIcon />
       </button>
     </li>

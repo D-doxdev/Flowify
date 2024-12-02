@@ -12,7 +12,11 @@ function TrackListingComponent({ dummyData }) {
       gender={song.gender}
     />
   ));
-  return <ul className="flex-grow px-5">{songList}</ul>;
+  return (
+    <ul className="scrollbar-hide flex-grow overflow-y-scroll px-5">
+      {songList}
+    </ul>
+  );
 }
 
 export default TrackListingComponent;

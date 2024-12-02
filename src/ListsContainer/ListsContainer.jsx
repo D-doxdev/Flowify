@@ -20,7 +20,7 @@ function ListsContainer() {
   }, []);
   // This is a container component, only call instances and pass props, doesn't render own JSX.
   return (
-    <div className="flex h-dvh w-full flex-nowrap gap-5">
+    <div className="flex h-dvh w-full flex-nowrap gap-5 overflow-hidden">
       <TrackListingComponent dummyData={dummyData} />
       {/* Passes dummyData to TrackListingComponent */}
       <CustomPlaylistComponent />
