@@ -1,19 +1,21 @@
 import "./App.css";
 import ListsContainer from "./ListsContainer/ListsContainer";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ShaderGradientCanvas, ShaderGradient } from "@shadergradient/react";
+import SearchBarComponent from "./SearchBarComponent";
 //import * as reactSpring from "@react-spring/three" // Not sure why this is here, perhaps remove, said to include in the ShaderGradient documentation
 
 function App() {
+  // State for search results, passed to SearchBarComponent
+  const [searchData, setSearchData] = useState("");
+
   return (
-    <div>
+    <div className="h-dvh w-full overflow-hidden">
       <ShaderGradientCanvas
         style={{
           position: "absolute",
           top: 0,
           left: 0,
-          width: "100%",
-          height: "100%",
           zIndex: -1,
         }}
       >
@@ -22,6 +24,10 @@ function App() {
           urlString="https://www.shadergradient.co/customize?animate=on&axesHelper=on&bgColor1=%23000000&bgColor2=%23000000&brightness=1.1&cAzimuthAngle=180&cDistance=3.9&cPolarAngle=115&cameraZoom=1&color1=%238e5024&color2=%234d5962&color3=%230c0000&destination=onCanvas&embedMode=off&envPreset=city&format=gif&fov=45&frameRate=10&grain=off&lightType=3d&pixelDensity=1&positionX=-0.5&positionY=0.1&positionZ=0&range=enabled&rangeEnd=40&rangeStart=0&reflection=0.1&rotationX=0&rotationY=0&rotationZ=235&shader=defaults&type=waterPlane&uAmplitude=0&uDensity=1.1&uFrequency=5.5&uSpeed=0.1&uStrength=2.4&uTime=0.2&wireframe=false"
         />
       </ShaderGradientCanvas>
+      <SearchBarComponent
+        searchData={searchData}
+        setSearchData={setSearchData}
+      />
       <ListsContainer />
     </div>
   );

@@ -6,5 +6,5 @@ export default {
   theme: {
     extend: {},
   },
-  plugins: [scrollbarHide], // Add this plugin
+  plugins: [scrollbarHide], // Hide scrollbar tailwind css plugin
 };

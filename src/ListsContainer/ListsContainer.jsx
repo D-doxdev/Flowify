@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import TrackListingComponent from "./Components/TrackListingComponent";
 import CustomPlaylistComponent from "./Components/CustomPlaylistComponent";
+import SearchBarComponent from "../SearchBarComponent";
 import axios from "axios";
 
 function ListsContainer() {
@@ -20,9 +21,9 @@ function ListsContainer() {
   }, []);
   // This is a container component, only call instances and pass props, doesn't render own JSX.
   return (
-    <div className="flex h-dvh w-full flex-nowrap gap-5 overflow-hidden">
-      <TrackListingComponent dummyData={dummyData} />
+    <div className="flex h-3/4 w-full flex-nowrap gap-5">
       {/* Passes dummyData to TrackListingComponent */}
+      <TrackListingComponent dummyData={dummyData} />
       <CustomPlaylistComponent />
     </div>
   );
