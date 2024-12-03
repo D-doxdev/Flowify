@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import TrackListingComponent from "./Components/TrackListingComponent";
 import CustomPlaylistComponent from "./Components/CustomPlaylistComponent";
-import SearchBarComponent from "../SearchBarComponent";
 import axios from "axios";
 
 function ListsContainer() {
@@ -9,6 +8,8 @@ function ListsContainer() {
   const [dummyData, setDummyData] = useState([]);
   // Selected song state, passed to CustomPlaylistComponent when a li item is clicked.
   const [selectedSong, setSelectedSong] = useState([]);
+  // input state for customPlaylist
+  const [playlistInput, setPlaylistInput] = useState("");
   // updates the selectedSong when the add song button is pressed in li items, also checks for doubles.
   function handleAddSong(gatheredSongData) {
     // takes the previous object with some, returns true if it contains the ID of the gatheredSongData object
@@ -46,7 +47,11 @@ function ListsContainer() {
         handleAddSong={handleAddSong}
       />
       {/* Passes the selected song to component */}
-      <CustomPlaylistComponent selectedSong={selectedSong} />
+      <CustomPlaylistComponent
+        selectedSong={selectedSong}
+        playlistInput={playlistInput}
+        setPlaylistInput={setPlaylistInput}
+      />
     </div>
   );
 }

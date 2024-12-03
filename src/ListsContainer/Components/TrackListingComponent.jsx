@@ -15,12 +15,14 @@ function TrackListingComponent({ dummyData, handleAddSong }) {
     />
   ));
   return (
-    <div className="scrollbar-hide flex-grow overflow-y-scroll">
-      <h1 className="mb-3 text-6xl text-slate-100">Songs</h1>
-      <ul>
-        {/* uses a plugin https://www.npmjs.com/package/tailwind-scrollbar-hide */}
-        {songList}
-      </ul>
+    <div className="relative flex h-auto grow">
+      <h1 className="absolute -top-20 mb-3 text-6xl text-slate-100">Songs</h1>
+      <div className="scrollbar-hide h-4/5 flex-grow overflow-y-scroll">
+        <ul className="">
+          {/* uses a plugin https://www.npmjs.com/package/tailwind-scrollbar-hide */}
+          {songList}
+        </ul>
+      </div>
     </div>
   );
 }

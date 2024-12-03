@@ -1,7 +1,11 @@
 import React from "react";
 import SongInfoComponent from "../../SongInfoComponent";
 
-function CustomPlaylistComponent({ selectedSong }) {
+function CustomPlaylistComponent({
+  selectedSong,
+  playlistInput,
+  setPlaylistInput,
+}) {
   // Stores the rendered li items from SongInfoComponent in songList
   const songList = selectedSong.map((song) => (
     // Passes the relevant data to SongInfoComponent from the Array of objects.
@@ -14,12 +18,21 @@ function CustomPlaylistComponent({ selectedSong }) {
     />
   ));
   return (
-    <div className="scrollbar-hide flex-grow overflow-y-scroll">
-      <h1 className="mb-3 text-6xl text-slate-100">Added songs</h1>
-      <ul>
-        {/* uses a plugin https://www.npmjs.com/package/tailwind-scrollbar-hide */}
-        {songList}
-      </ul>
+    <div className="relative flex h-auto grow">
+      <input
+        onChange={({ target }) => setPlaylistInput(target.value)}
+        className="absolute -top-20 mx-0 my-0 mb-0 w-[500px] bg-transparent px-0 py-0 text-6xl text-slate-100"
+        name="searchbar"
+        type="text"
+        placeholder="Playlist name"
+        value={playlistInput}
+      />
+      <div className="scrollbar-hide h-4/5 flex-grow overflow-y-scroll">
+        <ul>
+          {/* uses a plugin https://www.npmjs.com/package/tailwind-scrollbar-hide */}
+          {songList}
+        </ul>
+      </div>
     </div>
   );
 }

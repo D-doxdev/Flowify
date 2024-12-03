@@ -17,7 +17,7 @@ function SongInfoComponent({
     handleAddSong(songData);
   }
   return (
-    <li className="mt-3 flex flex-row items-center rounded-md border border-gray-100 border-opacity-5 bg-slate-300 bg-opacity-0 bg-clip-padding px-5 py-3 backdrop-blur-lg backdrop-filter">
+    <li className="mb-3 flex flex-row items-center rounded-md border border-gray-100 border-opacity-5 bg-slate-300 bg-opacity-0 bg-clip-padding px-5 py-3 backdrop-blur-lg backdrop-filter">
       <div>
         <h3 className="mb-3 text-xl text-slate-100">{firstName}</h3>
         <div className="flex flex-row items-center">
