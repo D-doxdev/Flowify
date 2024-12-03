@@ -5,7 +5,17 @@ import AddIcon from "@mui/icons-material/Add";
 // Uses the Material UI icon library, installed in project.
 // https://mui.com/material-ui/material-icons/?query=music&selected=MusicNote
 
-function SongInfoComponent({ firstName, lastName, gender }) {
+function SongInfoComponent({
+  songId,
+  firstName,
+  lastName,
+  gender,
+  handleAddSong,
+}) {
+  function handleGatherSongData() {
+    const songData = { songId, firstName, lastName, gender };
+    handleAddSong(songData);
+  }
   return (
     <li className="mt-3 flex flex-row items-center rounded-md border border-gray-100 border-opacity-5 bg-slate-300 bg-opacity-0 bg-clip-padding px-5 py-3 backdrop-blur-lg backdrop-filter">
       <div>
@@ -21,7 +31,7 @@ function SongInfoComponent({ firstName, lastName, gender }) {
           <h4 className="text-slate-300">{gender}</h4>
         </div>
       </div>
-      <button className="ml-auto text-slate-300">
+      <button className="ml-auto text-slate-300" onClick={handleGatherSongData}>
         <AddIcon />
       </button>
     </li>
