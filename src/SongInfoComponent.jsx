@@ -15,6 +15,7 @@ function SongInfoComponent({
   isCurrentlySelected,
   selectedSong, // passed in order to track which list the song is in.
   isInCustomPlaylist,
+  handleRemoveSong,
 }) {
   /*
   useEffect(() => {
@@ -34,12 +35,18 @@ function SongInfoComponent({
   }
 
   useEffect(() => {
+    console.log(`The id works and is ${songId}`);
     checkIfAddedToList();
-  }, []);
+  }, [songId, selectedSong]);
 
   function handleGatherSongData() {
     const songData = { songId, firstName, lastName, gender };
     handleAddSong(songData);
+  }
+
+  function handleClickToRemoveSong(songId) {
+    //console.log(songId);
+    handleRemoveSong(songId);
   }
 
   const isSelectedButton = (
@@ -55,7 +62,10 @@ function SongInfoComponent({
   );
 
   const removeFromListButton = (
-    <button className="ml-auto text-slate-300" onClick={handleGatherSongData}>
+    <button
+      className="ml-auto text-slate-300"
+      onClick={() => handleClickToRemoveSong(songId)}
+    >
       <RemoveCircleOutlineIcon />
     </button>
   );

@@ -21,21 +21,30 @@ function ListsContainer() {
       const isDuplicate = prev.some(
         (song) => song.songId === gatheredSongData.songId,
       );
+      console.log(`this is the added items' ID: ${gatheredSongData.songId}`);
       // if true, only return the previous object, if false, return the updated array.
       return isDuplicate ? prev : [...prev, gatheredSongData];
     });
   }
-  // Checks for changes to selectedSong first, then logs.
+
+  function handleRemoveSong(songToBeRemovedId) {
+    console.log(songToBeRemovedId);
+    setSelectedSong(
+      selectedSong.filter((song) => song.songId !== songToBeRemovedId),
+    );
+  }
+
+  /* debug useEffect
   useEffect(() => {
     console.log(selectedSong);
   }, [selectedSong]);
-
+*/
   function fetchDummyData() {
     axios
       .get("https://dummyjson.com/users") // uses a dummy data API until the Spotify data is set up. https://dummyjson.com/docs/users
       .then((response) => {
         setDummyData(response.data.users);
-        console.log(response.data.users); // See so that the data is detched in the concole.
+        //console.log(response.data.users); // See so that the data is detched in the concole.
       });
   }
   // Calls when component is rendered, Change the dependency array later to update via Search etc.
@@ -50,6 +59,7 @@ function ListsContainer() {
         dummyData={dummyData}
         handleAddSong={handleAddSong}
         selectedSong={selectedSong}
+        handleRemoveSong={handleRemoveSong}
       />
       {/* Passes the selected song to component */}
       <CustomPlaylistComponent
@@ -57,6 +67,7 @@ function ListsContainer() {
         playlistInput={playlistInput}
         setPlaylistInput={setPlaylistInput}
         isCurrentlySelected={isCurrentlySelected}
+        handleRemoveSong={handleRemoveSong}
       />
     </div>
   );

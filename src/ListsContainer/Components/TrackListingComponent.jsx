@@ -20,7 +20,7 @@ function TrackListingComponent({ dummyData, handleAddSong, selectedSong }) {
       <h1 className="absolute -top-16 mb-3 text-4xl text-slate-100 md:-top-20 md:text-6xl">
         Songs
       </h1>
-      <div className="scrollbar-hide h-4/5 flex-grow overflow-y-scroll">
+      <div className="h-4/5 flex-grow overflow-y-scroll scrollbar-hide">
         <ul className="">
           {/* uses a plugin https://www.npmjs.com/package/tailwind-scrollbar-hide */}
           {songList}

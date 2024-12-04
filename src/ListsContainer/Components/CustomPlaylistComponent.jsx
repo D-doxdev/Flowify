@@ -6,6 +6,7 @@ function CustomPlaylistComponent({
   playlistInput,
   setPlaylistInput,
   isCurrentlySelected,
+  handleRemoveSong,
 }) {
   // State for tracking if the added song is in the custom playlist.
   const [isInCustomPlaylist] = useState(true);
@@ -13,16 +14,22 @@ function CustomPlaylistComponent({
   const songList = selectedSong.map((song) => (
     // Passes the relevant data to SongInfoComponent from the Array of objects.
     <SongInfoComponent
-      key={song.id} // Unique ID generation, built in JS method.
-      songId={song.id}
+      key={crypto.randomUUID()} // Unique ID generation, built in JS method.
+      songId={song.songId}
       firstName={song.firstName}
       lastName={song.lastName}
       gender={song.gender}
       isCurrentlySelected={isCurrentlySelected}
       selectedSong={selectedSong}
       isInCustomPlaylist={isInCustomPlaylist}
+      handleRemoveSong={handleRemoveSong}
     />
   ));
+
+  useEffect(() => {
+    console.log("Song list in parent component:", songList);
+  }, []);
+
   return (
     <div className="relative flex h-auto grow">
       <input
