@@ -10,7 +10,7 @@ function App() {
   const [searchData, setSearchData] = useState("");
 
   return (
-    <div className="h-dvh w-full overflow-hidden">
+    <div className="h-dvh w-full overflow-hidden px-10">
       <ShaderGradientCanvas
         style={{
           position: "absolute",

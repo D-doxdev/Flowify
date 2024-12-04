@@ -6,8 +6,12 @@ import axios from "axios";
 function ListsContainer() {
   // Dummy data stored, is passed as prop to TrackListingComponent which passes to SongInfoComponent.
   const [dummyData, setDummyData] = useState([]);
-  // Selected song state, passed to CustomPlaylistComponent when a li item is clicked.
+  // Selected song state with object data, passed to CustomPlaylistComponent when a li item is clicked.
   const [selectedSong, setSelectedSong] = useState([]);
+  // Passed as a prop to decide if the SongInfoComponent is in the CustomPlaylistComponent and conditionally render the button, dummydata might be abetter solution
+  const [isCurrentlySelected] = useState(true);
+  // Determine if the song is currently selected
+
   // input state for customPlaylist
   const [playlistInput, setPlaylistInput] = useState("");
   // updates the selectedSong when the add song button is pressed in li items, also checks for doubles.
@@ -45,12 +49,14 @@ function ListsContainer() {
       <TrackListingComponent
         dummyData={dummyData}
         handleAddSong={handleAddSong}
+        selectedSong={selectedSong}
       />
       {/* Passes the selected song to component */}
       <CustomPlaylistComponent
         selectedSong={selectedSong}
         playlistInput={playlistInput}
         setPlaylistInput={setPlaylistInput}
+        isCurrentlySelected={isCurrentlySelected}
       />
     </div>
   );
