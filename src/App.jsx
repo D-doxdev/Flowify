@@ -3,11 +3,42 @@ import ListsContainer from "./ListsContainer/ListsContainer";
 import React, { useEffect, useState } from "react";
 import { ShaderGradientCanvas, ShaderGradient } from "@shadergradient/react";
 import SearchBarComponent from "./SearchBarComponent";
-//import * as reactSpring from "@react-spring/three" // Not sure why this is here, perhaps remove, said to include in the ShaderGradient documentation
+import { client_id, client_secret } from "../spotify_API_data";
+//import axios from "axios";
 
 function App() {
   // State for search results, passed to SearchBarComponent
   const [searchData, setSearchData] = useState("");
+  const [accessToken, setAccessToken] = useState("");
+
+  // Spotify API call on render, imports the necessary data from spotify_API_data.js
+  useEffect(() => {
+    // API Access Token
+    var authParameters = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body:
+        "grant_type=client_credentials&client_id=" +
+        client_id +
+        "&client_secret=" +
+        client_secret,
+    };
+
+    try {
+      fetch("https://accounts.spotify.com/api/token", authParameters)
+        .then((result) => result.json())
+        .then((data) => setAccessToken(data.access_token));
+    } catch (error) {
+      console.error(error);
+    }
+  }, []);
+
+  // search function for finding songs! I left off here 4 Dec 2024. https://www.youtube.com/watch?v=1PWDxgqLmDA
+  async function search() {
+    console.log("search for " + searchData); // example, King Krule
+  }
 
   return (
     <div className="h-dvh w-full overflow-hidden px-10">
@@ -27,6 +58,7 @@ function App() {
       <SearchBarComponent
         searchData={searchData}
         setSearchData={setSearchData}
+        search={search}
       />
       <ListsContainer />
     </div>

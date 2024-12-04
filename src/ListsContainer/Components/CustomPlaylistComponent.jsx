@@ -25,11 +25,11 @@ function CustomPlaylistComponent({
       handleRemoveSong={handleRemoveSong}
     />
   ));
-
+  /*
   useEffect(() => {
     console.log("Song list in parent component:", songList);
   }, []);
-
+*/
   return (
     <div className="relative flex h-auto grow">
       <input

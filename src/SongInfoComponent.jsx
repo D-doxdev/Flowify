@@ -35,7 +35,6 @@ function SongInfoComponent({
   }
 
   useEffect(() => {
-    console.log(`The id works and is ${songId}`);
     checkIfAddedToList();
   }, [songId, selectedSong]);
 
@@ -45,7 +44,6 @@ function SongInfoComponent({
   }
 
   function handleClickToRemoveSong(songId) {
-    //console.log(songId);
     handleRemoveSong(songId);
   }
 
