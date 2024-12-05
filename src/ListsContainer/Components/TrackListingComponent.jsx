@@ -1,16 +1,16 @@
 import React from "react";
 import SongInfoComponent from "../../SongInfoComponent";
 
-function TrackListingComponent({ dummyData, handleAddSong, selectedSong }) {
+function TrackListingComponent({ musicSearchResult, handleAddSong, selectedSong }) {
   // Stores the rendered li items from SongInfoComponent in songList
-  const songList = dummyData.map((song) => (
+  const songList = musicSearchResult.map((track) => (
     // Passes the relevant data to SongInfoComponent from the Array of objects.
     <SongInfoComponent
       key={crypto.randomUUID()} // Unique ID generation, built in JS method.
-      songId={song.id}
-      firstName={song.firstName}
-      lastName={song.lastName}
-      gender={song.gender}
+      songId={track.id}
+      trackName={track.name}
+      artistName={track.artists[0]?.name}
+      albumName={track.album?.name}
       handleAddSong={handleAddSong}
       selectedSong={selectedSong}
     />

@@ -8,7 +8,7 @@ import { client_id, client_secret } from "../spotify_API_data";
 
 function App() {
   // State for search results, passed to SearchBarComponent
-  const [searchData, setSearchData] = useState("");
+  const [searchData, setSearchData] = useState("King Krule");
   const [accessToken, setAccessToken] = useState("");
   // The artist top songs result from the API request
   const [musicSearchResult, setMusicSearchResult] = useState([]);
@@ -64,7 +64,7 @@ function App() {
         searchParameters
       )
         .then((response) => response.json())
-        .then((data) => setMusicSearchResult(data))
+        .then((data) => setMusicSearchResult(data.tracks))
         .then(console.log(musicSearchResult)); // remove later, used to debug!
     } catch (error) {
       console.log('Song request failed! Please enter an artist name into the search field or reload the webpage.')

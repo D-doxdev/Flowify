@@ -8,9 +8,9 @@ import CheckIcon from "@mui/icons-material/Check";
 
 function SongInfoComponent({
   songId,
-  firstName,
-  lastName,
-  gender,
+  trackName,
+  artistName,
+  albumName,
   handleAddSong,
   selectedSong, // passed in order to track which list the song is in.
   isInCustomPlaylist,
@@ -20,7 +20,7 @@ function SongInfoComponent({
  the selectedSong state, it's used since it doesn't re-run each time on component re-render the
  way that useEffect is. */
   const [isAddedToList, setIsAddedToList] = useState(() =>
-    selectedSong.some((song) => song.songId === songId),
+    selectedSong.some((song) => song.songId == songId),
   );
 
   // used to determine if the li is added to the list or not, the buttons are dependent, was buggy and replaced with the state and callback function above
@@ -44,7 +44,7 @@ function SongInfoComponent({
   */
 
   function handleGatherSongData() {
-    const songData = { songId, firstName, lastName, gender };
+    const songData = { songId, trackName, artistName, albumName };
     handleAddSong(songData);
   }
 
@@ -77,16 +77,16 @@ function SongInfoComponent({
     return (
       <li className="mb-3 flex flex-row items-center rounded-md border border-gray-100 border-opacity-5 bg-slate-300 bg-opacity-0 bg-clip-padding px-5 py-3 backdrop-blur-lg backdrop-filter">
         <div>
-          <h3 className="mb-3 text-xl text-slate-100">{firstName}</h3>
+          <h3 className="mb-3 text-xl text-slate-100">{trackName}</h3>
           <div className="flex flex-row items-center">
             <span className="mr-1 text-sm text-slate-300">
               <SpatialAudioIcon fontSize="small" />
             </span>
-            <h4 className="mr-2 text-slate-300">{lastName}</h4>
+            <h4 className="mr-2 text-slate-300">{artistName}</h4>
             <span className="mr-1 text-slate-300">
               <LibraryMusicIcon fontSize="small" />
             </span>
-            <h4 className="text-slate-300">{gender}</h4>
+            <h4 className="text-slate-300">{albumName}</h4>
           </div>
         </div>
         {removeFromListButton}
@@ -96,16 +96,16 @@ function SongInfoComponent({
     return (
       <li className="mb-3 flex flex-row items-center rounded-md border border-gray-100 border-opacity-5 bg-slate-300 bg-opacity-0 bg-clip-padding px-5 py-3 backdrop-blur-lg backdrop-filter">
         <div>
-          <h3 className="mb-3 text-xl text-slate-100">{firstName}</h3>
+          <h3 className="mb-3 text-xl text-slate-100">{trackName}</h3>
           <div className="flex flex-row items-center">
             <span className="mr-1 text-sm text-slate-300">
               <SpatialAudioIcon fontSize="small" />
             </span>
-            <h4 className="mr-2 text-slate-300">{lastName}</h4>
+            <h4 className="mr-2 text-slate-300">{artistName}</h4>
             <span className="mr-1 text-slate-300">
               <LibraryMusicIcon fontSize="small" />
             </span>
-            <h4 className="text-slate-300">{gender}</h4>
+            <h4 className="text-slate-300">{albumName}</h4>
           </div>
         </div>
         {isAddedToList ? isSelectedButton : addToListButton}

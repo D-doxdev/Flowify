@@ -7,19 +7,18 @@ function CustomPlaylistComponent({
   setPlaylistInput,
   isCurrentlySelected,
   handleRemoveSong,
-  musicSearchResult={musicSearchResult},
 }) {
   // State for tracking if the added song is in the custom playlist.
   const [isInCustomPlaylist] = useState(true);
   // Stores the rendered li items from SongInfoComponent in songList
-  const songList = selectedSong.map((song) => (
+  const songList = selectedSong.map((track) => (
     // Passes the relevant data to SongInfoComponent from the Array of objects.
     <SongInfoComponent
       key={crypto.randomUUID()} // Unique ID generation, built in JS method.
-      songId={song.songId}
-      firstName={song.firstName}
-      lastName={song.lastName}
-      gender={song.gender}
+      songId={track.songId}
+      trackName={track.trackName}
+      artistName={track.artistName}
+      albumName={track.albumName}
       isCurrentlySelected={isCurrentlySelected}
       selectedSong={selectedSong}
       isInCustomPlaylist={isInCustomPlaylist}
