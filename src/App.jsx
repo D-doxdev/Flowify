@@ -3,6 +3,7 @@ import ListsContainer from "./ListsContainer/ListsContainer";
 import React, { useEffect, useState } from "react";
 import { ShaderGradientCanvas, ShaderGradient } from "@shadergradient/react";
 import SearchBarComponent from "./SearchBarComponent";
+import { url, getReturnedParamsFromSpotifyAuth } from "../spotify_API_data"
 //import axios from "axios";
 
 function App() {
@@ -30,7 +31,28 @@ function App() {
     } catch (error) {
       console.error(error);
     }
+    console.log(url)
   }, []);
+
+  // State for checking if logged in, should also check against the expires token which will be added. Need to improve security, also fix a state random number generator for spotify API.
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  useEffect(() => {
+    if (window.location.hash) {
+      const { access_token, expires_in, token_type } =
+        getReturnedParamsFromSpotifyAuth(window.location.hash);
+
+      localStorage.clear();
+
+      localStorage.setItem("accessToken", access_token);
+      localStorage.setItem("tokenType", token_type);
+      localStorage.setItem("expiresIn", expires_in);
+      if (localStorage.getItem("accessToken")) {
+        setIsLoggedIn(true)
+      } else {
+        setIsLoggedIn(false)
+      }
+    }
+  }, []); // added a dependancy array, different from the tutorial
 
   // search function for finding songs! I left off here 4 Dec 2024. https://www.youtube.com/watch?v=1PWDxgqLmDA
   async function search() {
@@ -64,11 +86,15 @@ function App() {
     } catch (error) {
       console.log('Song request failed! Please enter an artist name into the search field or reload the webpage.')
     }
-    
-    
   }
 
+  // Feeds the url from spotify_API_data to user browser when login button is clicked
+  const handleLogin = () => {
+    window.location = url;
+  };
+
   return (
+    isLoggedIn ? 
     <div className="h-dvh w-full overflow-hidden px-10">
       <ShaderGradientCanvas
         style={{
@@ -92,7 +118,11 @@ function App() {
       musicSearchResult={musicSearchResult}
       />
     </div>
+    :
+    <button className="text-white" onClick={handleLogin}>login to spotify</button>
+
   );
 }
 
 export default App;
+
