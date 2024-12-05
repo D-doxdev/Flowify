@@ -10,6 +10,8 @@ function App() {
   // State for search results, passed to SearchBarComponent
   const [searchData, setSearchData] = useState("");
   const [accessToken, setAccessToken] = useState("");
+  // The artist top songs result from the API request
+  const [musicSearchResult, setMusicSearchResult] = useState([]);
 
   // Spotify API call on render, imports the necessary data from spotify_API_data.js
   useEffect(() => {
@@ -37,7 +39,38 @@ function App() {
 
   // search function for finding songs! I left off here 4 Dec 2024. https://www.youtube.com/watch?v=1PWDxgqLmDA
   async function search() {
-    console.log("search for " + searchData); // example, King Krule
+    // test if the input value works console.log("search for " + searchData);
+    // Get request using search to get the artist ID
+    try {
+      var searchParameters = {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + accessToken,
+        },
+      };
+      var artistID = await fetch(
+        "https://api.spotify.com/v1/search?q=" + searchData + "&type=artist",
+        searchParameters,
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          return data.artists.items[0].id;
+          //console.log(data.artists.items[0].id);
+        });
+      // Get request with artist ID grab all the top tracks from that artist
+      var artistTopTracks = await fetch(
+        `https://api.spotify.com/v1/artists/${artistID}/top-tracks?market=SE`,
+        searchParameters
+      )
+        .then((response) => response.json())
+        .then((data) => setMusicSearchResult(data))
+        .then(console.log(musicSearchResult)); // remove later, used to debug!
+    } catch (error) {
+      console.log('Song request failed! Please enter an artist name into the search field or reload the webpage.')
+    }
+    
+    
   }
 
   return (
@@ -60,7 +93,9 @@ function App() {
         setSearchData={setSearchData}
         search={search}
       />
-      <ListsContainer />
+      <ListsContainer
+      musicSearchResult={musicSearchResult}
+      />
     </div>
   );
 }

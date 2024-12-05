@@ -3,7 +3,7 @@ import TrackListingComponent from "./Components/TrackListingComponent";
 import CustomPlaylistComponent from "./Components/CustomPlaylistComponent";
 import axios from "axios";
 
-function ListsContainer() {
+function ListsContainer({ musicSearchResult }) {
   // Dummy data stored, is passed as prop to TrackListingComponent which passes to SongInfoComponent.
   const [dummyData, setDummyData] = useState([]);
   // Selected song state with object data, passed to CustomPlaylistComponent when a li item is clicked.
@@ -34,11 +34,6 @@ function ListsContainer() {
     );
   }
 
-  /* debug useEffect
-  useEffect(() => {
-    console.log(selectedSong);
-  }, [selectedSong]);
-*/
   function fetchDummyData() {
     axios
       .get("https://dummyjson.com/users") // uses a dummy data API until the Spotify data is set up. https://dummyjson.com/docs/users
@@ -47,10 +42,12 @@ function ListsContainer() {
         //console.log(response.data.users); // See so that the data is detched in the concole.
       });
   }
+  
   // Calls when component is rendered, Change the dependency array later to update via Search etc.
   useEffect(() => {
     fetchDummyData();
   }, []);
+  
   // This is a container component, only call instances and pass props, doesn't render own JSX.
   return (
     <div className="flex h-3/4 w-full flex-nowrap gap-5">
@@ -60,6 +57,7 @@ function ListsContainer() {
         handleAddSong={handleAddSong}
         selectedSong={selectedSong}
         handleRemoveSong={handleRemoveSong}
+        musicSearchResult={musicSearchResult}
       />
       {/* Passes the selected song to component */}
       <CustomPlaylistComponent
@@ -68,6 +66,7 @@ function ListsContainer() {
         setPlaylistInput={setPlaylistInput}
         isCurrentlySelected={isCurrentlySelected}
         handleRemoveSong={handleRemoveSong}
+        musicSearchResult={musicSearchResult}
       />
     </div>
   );

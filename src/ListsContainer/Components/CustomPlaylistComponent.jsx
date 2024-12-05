@@ -7,6 +7,7 @@ function CustomPlaylistComponent({
   setPlaylistInput,
   isCurrentlySelected,
   handleRemoveSong,
+  musicSearchResult={musicSearchResult},
 }) {
   // State for tracking if the added song is in the custom playlist.
   const [isInCustomPlaylist] = useState(true);
