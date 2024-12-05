@@ -12,31 +12,36 @@ function SongInfoComponent({
   lastName,
   gender,
   handleAddSong,
-  isCurrentlySelected,
   selectedSong, // passed in order to track which list the song is in.
   isInCustomPlaylist,
   handleRemoveSong,
 }) {
+  /* State with a callback function that returns true if the songId is equal to song.songId in
+ the selectedSong state, it's used since it doesn't re-run each time on component re-render the
+ way that useEffect is. */
+  const [isAddedToList, setIsAddedToList] = useState(() =>
+    selectedSong.some((song) => song.songId === songId),
+  );
+
+  // used to determine if the li is added to the list or not, the buttons are dependent, was buggy and replaced with the state and callback function above
   /*
   useEffect(() => {
-    const checkedSongId = selectedSong.some((song) => song.songId === songId);
-    console.log("Passing selectedSong to SongInfoComponent:", checkedSongId);
+    console.log("the component " + songId + " is re-rendered!");
+    if (!isInCustomPlaylist) {
+      function checkIfAddedToList() {
+        const checkedSongId = selectedSong.some(
+          (song) => song.songId === songId,
+        );
+        if (checkedSongId) {
+          setIsAddedToList(checkedSongId);
+        } else {
+          return;
+        }
+      }
+      checkIfAddedToList();
+    }
   }, []);
   */
-  const [isAddedToList, setIsAddedToList] = useState(false);
-
-  function checkIfAddedToList() {
-    const checkedSongId = selectedSong.some((song) => song.songId === songId);
-    if (checkedSongId) {
-      setIsAddedToList(checkedSongId);
-    } else {
-      return;
-    }
-  }
-
-  useEffect(() => {
-    checkIfAddedToList();
-  }, [songId, selectedSong]);
 
   function handleGatherSongData() {
     const songData = { songId, firstName, lastName, gender };
