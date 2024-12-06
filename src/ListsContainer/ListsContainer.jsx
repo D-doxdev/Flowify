@@ -3,11 +3,14 @@ import TrackListingComponent from "./Components/TrackListingComponent";
 import CustomPlaylistComponent from "./Components/CustomPlaylistComponent";
 import axios from "axios";
 
-function ListsContainer({ musicSearchResult }) {
+function ListsContainer({
+  musicSearchResult,
+  selectedSong,
+  setSelectedSong,
+  createNewUserPlaylist,
+}) {
   // Dummy data stored, is passed as prop to TrackListingComponent which passes to SongInfoComponent.
   const [dummyData, setDummyData] = useState([]);
-  // Selected song state with object data, passed to CustomPlaylistComponent when a li item is clicked.
-  const [selectedSong, setSelectedSong] = useState([]);
   // Passed as a prop to decide if the SongInfoComponent is in the CustomPlaylistComponent and conditionally render the button, dummydata might be abetter solution
   const [isCurrentlySelected] = useState(true);
   // Determine if the song is currently selected
@@ -67,6 +70,7 @@ function ListsContainer({ musicSearchResult }) {
         isCurrentlySelected={isCurrentlySelected}
         handleRemoveSong={handleRemoveSong}
         musicSearchResult={musicSearchResult}
+        createNewUserPlaylist={createNewUserPlaylist}
       />
     </div>
   );

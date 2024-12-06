@@ -13,6 +13,8 @@ function App() {
   const [accessToken, setAccessToken] = useState("");
   // The artist top songs result from the API request
   const [musicSearchResult, setMusicSearchResult] = useState([]);
+  // Selected song state with object data, passed to CustomPlaylistComponent when a li item is clicked.
+  const [selectedSong, setSelectedSong] = useState([]);
 
   // State for checking if logged in, should also check against the expires token which will be added. Need to improve security, also fix a state random number generator for spotify API.
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -66,7 +68,7 @@ function App() {
 
   // Spotify API call on render, imports the necessary data from spotify_API_data.js
   useEffect(() => {
-    // API Access Token
+    // get the API Access Token
     var authParameters = {
       method: "POST",
       headers: {
@@ -119,8 +121,52 @@ function App() {
     }
   }
 
-  // 1. Create a playlist for the user with the name from the Playlist input (POST)
-  // 2. Get the playlist ID of the playlist from the user (GET)
+  // 1. Create a playlist for the user with the name from the Playlist input when the Export button is pressed. (POST)
+  async function createNewUserPlaylist() {
+    // Gets the current user ID which is required by the following API calls
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${userAccessToken}`);
+
+    var requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+
+    fetch("https://api.spotify.com/v1/me", requestOptions)
+      .then((response) => response.text())
+      .then((result) => console.log(result))
+      .catch((error) => console.log("error", error));
+    /*
+    var axios = require("axios");
+    var data = JSON.stringify({
+      collaborative: true,
+      description: "string",
+      name: "string",
+      public: true,
+    });
+
+    var config = {
+      method: "post",
+      url: "https://api.spotify.com/v1/users//playlists",
+      headers: {
+        Authorization: "",
+        "Content-Type": "application/json",
+      },
+      data: data,
+    };
+
+    axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+      */
+  }
+
+  // 2. Get the playlist ID of the playlist from the user, it's returned as a response from the server.
   // 3. Take the array of URI's that the user has added to the list and add them to the playlist ID (POST)
 
   return (
@@ -155,7 +201,12 @@ function App() {
             setSearchData={setSearchData}
             search={search}
           />
-          <ListsContainer musicSearchResult={musicSearchResult} />
+          <ListsContainer
+            musicSearchResult={musicSearchResult}
+            selectedSong={selectedSong}
+            setSelectedSong={setSelectedSong}
+            createNewUserPlaylist={createNewUserPlaylist}
+          />
         </>
       )}
     </div>

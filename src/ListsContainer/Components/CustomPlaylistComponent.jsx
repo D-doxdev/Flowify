@@ -9,6 +9,7 @@ function CustomPlaylistComponent({
   setPlaylistInput,
   isCurrentlySelected,
   handleRemoveSong,
+  createNewUserPlaylist,
 }) {
   // State for tracking if the added song is in the custom playlist.
   const [isInCustomPlaylist] = useState(true);
@@ -52,7 +53,10 @@ function CustomPlaylistComponent({
             value={playlistInput}
           />
           <div className="mb-auto ml-10 mt-8">
-            <button className="flex items-center space-x-2 text-white transition duration-300 ease-in-out hover:text-opacity-50">
+            <button
+              className="flex items-center space-x-2 text-white transition duration-300 ease-in-out hover:text-opacity-50"
+              onClick={createNewUserPlaylist}
+            >
               <h4 className="text-center">Export list to Spotify</h4>
               <span className="absolute right-5 top-2 rotate-90">
                 <SwitchAccessShortcutIcon />
