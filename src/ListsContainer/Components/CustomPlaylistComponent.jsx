@@ -34,7 +34,7 @@ function CustomPlaylistComponent({
     <div className="relative flex h-auto grow">
       <input
         onChange={({ target }) => setPlaylistInput(target.value)}
-        className="absolute -top-16 mx-0 my-0 mb-0 w-[500px] bg-transparent px-0 py-0 text-4xl text-slate-100 md:-top-20 md:text-6xl"
+        className="absolute -top-16 mx-0 my-0 mb-0 w-[500px] bg-transparent px-0 py-0 text-4xl text-slate-100 outline-none focus:outline-none focus:ring-0 md:-top-[5.5rem] md:text-6xl"
         name="searchbar"
         type="text"
         placeholder="Playlist name"

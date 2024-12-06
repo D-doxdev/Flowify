@@ -28,7 +28,7 @@ function ListsContainer({ musicSearchResult }) {
   }
 
   function handleRemoveSong(songToBeRemovedId) {
-    console.log(songToBeRemovedId);
+    console.log(`Id of the item removed ${songToBeRemovedId}`);
     setSelectedSong(
       selectedSong.filter((song) => song.songId !== songToBeRemovedId),
     );

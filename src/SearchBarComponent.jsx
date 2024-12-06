@@ -7,10 +7,10 @@ function SearchBarComponent({ searchData, setSearchData, search }) {
       <div className="m-auto flex flex-nowrap space-x-5 rounded-md border border-gray-100 border-opacity-5 bg-slate-300 bg-opacity-0 bg-clip-padding px-5 py-3 backdrop-blur-lg backdrop-filter">
         <input
           onChange={({ target }) => setSearchData(target.value)}
-          className="bg-transparent px-2 py-2 text-slate-300 focus:border-none focus:bg-transparent"
+          className="bg-transparent px-2 py-2 text-slate-300 outline-none focus:border-none focus:bg-transparent focus:outline-none focus:ring-0"
           name="searchbar"
           type="text"
-          placeholder="Type your genre here"
+          placeholder="Search artist here..."
           value={searchData}
           onKeyDown={(e) => {
             if (e.key == "Enter") {
