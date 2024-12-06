@@ -42,15 +42,15 @@ function ListsContainer({ musicSearchResult }) {
         //console.log(response.data.users); // See so that the data is detched in the concole.
       });
   }
-  
+
   // Calls when component is rendered, Change the dependency array later to update via Search etc.
   useEffect(() => {
     fetchDummyData();
   }, []);
-  
+
   // This is a container component, only call instances and pass props, doesn't render own JSX.
   return (
-    <div className="flex h-3/4 w-full flex-nowrap gap-5">
+    <div className="flex h-3/4 w-full flex-row flex-nowrap gap-5">
       {/* Passes dummyData to component */}
       <TrackListingComponent
         dummyData={dummyData}

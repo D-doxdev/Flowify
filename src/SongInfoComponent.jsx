@@ -53,20 +53,23 @@ function SongInfoComponent({
   }
 
   const isSelectedButton = (
-    <button className="ml-auto text-slate-300 hover:cursor-default">
+    <button className="ml-auto px-2 py-2 text-slate-100 hover:cursor-default">
       <CheckIcon />
     </button>
   );
 
   const addToListButton = (
-    <button className="ml-auto text-slate-300" onClick={handleGatherSongData}>
+    <button
+      className="ml-auto px-2 py-2 text-slate-100 transition duration-300 ease-in-out hover:text-opacity-50"
+      onClick={handleGatherSongData}
+    >
       <AddIcon />
     </button>
   );
 
   const removeFromListButton = (
     <button
-      className="ml-auto text-slate-300"
+      className="ml-auto px-2 py-2 text-slate-100 transition duration-300 ease-in-out hover:text-opacity-50"
       onClick={() => handleClickToRemoveSong(songId)}
     >
       <RemoveCircleOutlineIcon />

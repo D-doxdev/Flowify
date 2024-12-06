@@ -1,7 +1,11 @@
 import React from "react";
 import SongInfoComponent from "../../SongInfoComponent";
 
-function TrackListingComponent({ musicSearchResult, handleAddSong, selectedSong }) {
+function TrackListingComponent({
+  musicSearchResult,
+  handleAddSong,
+  selectedSong,
+}) {
   // Stores the rendered li items from SongInfoComponent in songList
   const songList = musicSearchResult.map((track) => (
     // Passes the relevant data to SongInfoComponent from the Array of objects.

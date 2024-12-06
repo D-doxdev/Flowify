@@ -4,11 +4,12 @@ import React, { useEffect, useState } from "react";
 import { ShaderGradientCanvas, ShaderGradient } from "@shadergradient/react";
 import SearchBarComponent from "./SearchBarComponent";
 import { url, getReturnedParamsFromSpotifyAuth } from "../spotify_API_data";
+import AudiotrackIcon from "@mui/icons-material/Audiotrack";
 //import axios from "axios";
 
 function App() {
   // State for search results, passed to SearchBarComponent
-  const [searchData, setSearchData] = useState("King Krule");
+  const [searchData, setSearchData] = useState("");
   const [accessToken, setAccessToken] = useState("");
   // The artist top songs result from the API request
   const [musicSearchResult, setMusicSearchResult] = useState([]);
@@ -112,13 +113,17 @@ function App() {
         .then((response) => response.json())
         .then((data) => setMusicSearchResult(data.tracks));
     } catch (error) {
-      setErrorMessage(
+      console.log(
         "Song request failed! Please enter an artist name into the search field or reload the webpage.",
       );
     }
   }
 
-  return isLoggedIn ? (
+  // 1. Create a playlist for the user with the name from the Playlist input (POST)
+  // 2. Get the playlist ID of the playlist from the user (GET)
+  // 3. Take the array of URI's that the user has added to the list and add them to the playlist ID (POST)
+
+  return (
     <div className="h-dvh w-full overflow-hidden px-10">
       <ShaderGradientCanvas
         style={{
@@ -133,18 +138,35 @@ function App() {
           urlString="https://www.shadergradient.co/customize?animate=on&axesHelper=on&bgColor1=%23000000&bgColor2=%23000000&brightness=1.1&cAzimuthAngle=180&cDistance=3.9&cPolarAngle=115&cameraZoom=1&color1=%238e5024&color2=%234d5962&color3=%230c0000&destination=onCanvas&embedMode=off&envPreset=city&format=gif&fov=45&frameRate=10&grain=off&lightType=3d&pixelDensity=1&positionX=-0.5&positionY=0.1&positionZ=0&range=enabled&rangeEnd=40&rangeStart=0&reflection=0.1&rotationX=0&rotationY=0&rotationZ=235&shader=defaults&type=waterPlane&uAmplitude=0&uDensity=1.1&uFrequency=5.5&uSpeed=0.1&uStrength=2.4&uTime=0.2&wireframe=false"
         />
       </ShaderGradientCanvas>
-      <SearchBarComponent
-        searchData={searchData}
-        setSearchData={setSearchData}
-        search={search}
-      />
-      <ListsContainer musicSearchResult={musicSearchResult} />
+      {!isLoggedIn ? (
+        <div className="flex h-dvh w-full items-center justify-center align-middle">
+          <button
+            className="rounded-md border border-gray-100 border-opacity-5 bg-slate-300 bg-opacity-0 bg-clip-padding px-10 py-5 text-white backdrop-blur-lg backdrop-filter transition duration-300 ease-in-out hover:text-opacity-70 sm:px-20 sm:py-10"
+            onClick={handleLogin}
+          >
+            login via Spotify to search your favorite songs
+            <AudiotrackIcon className="ml-3" />
+          </button>
+        </div>
+      ) : (
+        <>
+          <SearchBarComponent
+            searchData={searchData}
+            setSearchData={setSearchData}
+            search={search}
+          />
+          <ListsContainer musicSearchResult={musicSearchResult} />
+        </>
+      )}
     </div>
-  ) : (
-    <button className="text-white" onClick={handleLogin}>
-      login to spotify
-    </button>
   );
 }
 
 export default App;
+
+/* 
+
+
+
+
+*/

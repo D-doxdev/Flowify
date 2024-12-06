@@ -13,14 +13,23 @@ function SearchBarComponent({ searchData, setSearchData, search }) {
           placeholder="Search artist here..."
           value={searchData}
           onKeyDown={(e) => {
-            if (e.key == "Enter") {
+            if (e.key == "Enter" && e.target.value !== "") {
               search();
             }
           }}
         />
-        <button className="mx-auto text-slate-300" onClick={search}>
-          <TroubleshootIcon />
-        </button>
+        {!searchData.length > 0 ? (
+          <button className="mx-auto px-2 py-2 text-slate-100 text-opacity-50 transition hover:cursor-default">
+            <TroubleshootIcon />
+          </button>
+        ) : (
+          <button
+            className="mx-auto px-2 py-2 text-slate-100 transition duration-300 ease-in-out hover:text-opacity-50"
+            onClick={search}
+          >
+            <TroubleshootIcon />
+          </button>
+        )}
       </div>
     </div>
   );
