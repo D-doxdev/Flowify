@@ -15,6 +15,7 @@ function TrackListingComponent({
       trackName={track.name}
       artistName={track.artists[0]?.name}
       albumName={track.album?.name}
+      uri={track.uri}
       handleAddSong={handleAddSong}
       selectedSong={selectedSong}
     />

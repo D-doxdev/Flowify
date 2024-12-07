@@ -157,6 +157,8 @@ function App() {
   }
 
   // 1. Create a playlist for the user with the name from the Playlist input when the Export button is pressed. (POST)
+  // 2. Get the playlist ID of the playlist from the user, it's returned as a response from the server.
+  // 3. Take the array of URI's that the user has added to the list and add them to the playlist ID (POST)
   async function createNewUserPlaylist() {
     const headers = new Headers();
     headers.append("Authorization", `Bearer ${userAccessToken}`);
@@ -194,14 +196,18 @@ function App() {
       .then((playlistData) => {
         console.log("Playlist created:", playlistData);
 
-        // Add tracks to the playlist
+        // Formats the array of URI's to an array of strings.
+        const arrOfUriFormattedSongs = selectedSong.map((song) =>
+          song.uri.toString(),
+        );
+
         const tracksHeaders = new Headers();
         tracksHeaders.append("Authorization", `Bearer ${userAccessToken}`);
         tracksHeaders.append("Content-Type", "application/json");
 
         const tracksBody = JSON.stringify({
           position: 0,
-          uris: ["spotify:track:3SVAN3BRByDmHOhKyIDxfC"], // Replace with actual track URI
+          uris: arrOfUriFormattedSongs, // The formatted array of strings goes here
         });
 
         return fetch(
@@ -220,9 +226,6 @@ function App() {
       })
       .catch((error) => console.log("Error:", error));
   }
-
-  // 2. Get the playlist ID of the playlist from the user, it's returned as a response from the server.
-  // 3. Take the array of URI's that the user has added to the list and add them to the playlist ID (POST)
 
   return (
     <div className="h-dvh w-full overflow-hidden px-10">

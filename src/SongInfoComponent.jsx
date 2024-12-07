@@ -15,6 +15,7 @@ function SongInfoComponent({
   selectedSong, // passed in order to track which list the song is in.
   isInCustomPlaylist,
   handleRemoveSong,
+  uri,
 }) {
   /* State with a callback function that returns true if the songId is equal to song.songId in
  the selectedSong state, it's used since it doesn't re-run each time on component re-render the
@@ -44,7 +45,7 @@ function SongInfoComponent({
   */
 
   function handleGatherSongData() {
-    const songData = { songId, trackName, artistName, albumName };
+    const songData = { songId, trackName, artistName, albumName, uri };
     handleAddSong(songData);
   }
 
