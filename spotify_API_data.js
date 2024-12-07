@@ -35,7 +35,7 @@ const getReturnedParamsFromSpotifyAuth = (hash) => {
     return accumulater;
   }, {});
 
-  console.log(paramsSplitUp);
+  //console.log(paramsSplitUp);
   return paramsSplitUp;
 };
 

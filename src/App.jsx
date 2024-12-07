@@ -15,12 +15,15 @@ function App() {
   const [musicSearchResult, setMusicSearchResult] = useState([]);
   // Selected song state with object data, passed to CustomPlaylistComponent when a li item is clicked.
   const [selectedSong, setSelectedSong] = useState([]);
+  // input state for customPlaylist
+  const [playlistInput, setPlaylistInput] = useState("");
 
   // State for checking if logged in, should also check against the expires token which will be added. Need to improve security, also fix a state random number generator for spotify API.
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userAccessToken, setUserAccessToken] = useState("");
   const [userTokenType, setUserTokenType] = useState("");
   const [userTokenExpireTime, setUserTokenExpireTime] = useState("");
+  const [isTokenValid, setIsTokenValid] = useState();
 
   // useRef for controller of API calls
   const controllerRef = useRef(null);
@@ -41,6 +44,7 @@ function App() {
   }, []);
 
   // Keeps track of the userExpirationToken
+
   useEffect(() => {
     if (userTokenExpireTime) {
       const currentTimeInSeconds = Math.round(Date.now() / 1000);
@@ -52,8 +56,9 @@ function App() {
 
       // Update the login state
       setIsLoggedIn(currentTimeInSeconds < expirationTime);
+      window.location.reload;
     }
-  }, [userTokenExpireTime]);
+  }, [userTokenExpireTime, isLoggedIn]);
 
   // Checks for token, if true the user is logged in.
   useEffect(() => {
@@ -153,47 +158,67 @@ function App() {
 
   // 1. Create a playlist for the user with the name from the Playlist input when the Export button is pressed. (POST)
   async function createNewUserPlaylist() {
-    // Gets the current user ID which is required by the following API calls
-    var myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${userAccessToken}`);
+    const headers = new Headers();
+    headers.append("Authorization", `Bearer ${userAccessToken}`);
 
-    var requestOptions = {
+    // Fetch current user profile to get the user ID
+    fetch("https://api.spotify.com/v1/me", {
       method: "GET",
-      headers: myHeaders,
+      headers: headers,
       redirect: "follow",
-    };
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("User ID:", data.id);
 
-    fetch("https://api.spotify.com/v1/me", requestOptions)
-      .then((response) => response.text())
-      .then((result) => console.log(result))
-      .catch((error) => console.log("error", error));
-    /*
-    var axios = require("axios");
-    var data = JSON.stringify({
-      collaborative: true,
-      description: "string",
-      name: "string",
-      public: true,
-    });
+        // Create playlist
+        const playlistHeaders = new Headers();
+        playlistHeaders.append("Authorization", `Bearer ${userAccessToken}`);
+        playlistHeaders.append("Content-Type", "application/json");
 
-    var config = {
-      method: "post",
-      url: "https://api.spotify.com/v1/users//playlists",
-      headers: {
-        Authorization: "",
-        "Content-Type": "application/json",
-      },
-      data: data,
-    };
+        const playlistBody = JSON.stringify({
+          collaborative: false,
+          description: "A playlist created via Spotify API",
+          name: playlistInput,
+          public: true,
+        });
 
-    axios(config)
-      .then(function (response) {
-        console.log(JSON.stringify(response.data));
+        return fetch(`https://api.spotify.com/v1/users/${data.id}/playlists`, {
+          method: "POST",
+          headers: playlistHeaders,
+          body: playlistBody,
+          redirect: "follow",
+        });
       })
-      .catch(function (error) {
-        console.log(error);
-      });
-      */
+      .then((response) => response.json())
+      .then((playlistData) => {
+        console.log("Playlist created:", playlistData);
+
+        // Add tracks to the playlist
+        const tracksHeaders = new Headers();
+        tracksHeaders.append("Authorization", `Bearer ${userAccessToken}`);
+        tracksHeaders.append("Content-Type", "application/json");
+
+        const tracksBody = JSON.stringify({
+          position: 0,
+          uris: ["spotify:track:3SVAN3BRByDmHOhKyIDxfC"], // Replace with actual track URI
+        });
+
+        return fetch(
+          `https://api.spotify.com/v1/playlists/${playlistData.id}/tracks`,
+          {
+            method: "POST",
+            headers: tracksHeaders,
+            body: tracksBody,
+            redirect: "follow",
+          },
+        );
+      })
+      .then((response) => response.json())
+      .then((trackData) => {
+        console.log("Tracks added:", trackData);
+      })
+      .catch((error) => console.log("Error:", error));
   }
 
   // 2. Get the playlist ID of the playlist from the user, it's returned as a response from the server.
@@ -236,6 +261,8 @@ function App() {
             selectedSong={selectedSong}
             setSelectedSong={setSelectedSong}
             createNewUserPlaylist={createNewUserPlaylist}
+            playlistInput={playlistInput}
+            setPlaylistInput={setPlaylistInput}
           />
         </>
       )}

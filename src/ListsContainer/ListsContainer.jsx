@@ -8,6 +8,8 @@ function ListsContainer({
   selectedSong,
   setSelectedSong,
   createNewUserPlaylist,
+  playlistInput,
+  setPlaylistInput,
 }) {
   // Dummy data stored, is passed as prop to TrackListingComponent which passes to SongInfoComponent.
   const [dummyData, setDummyData] = useState([]);
@@ -15,8 +17,6 @@ function ListsContainer({
   const [isCurrentlySelected] = useState(true);
   // Determine if the song is currently selected
 
-  // input state for customPlaylist
-  const [playlistInput, setPlaylistInput] = useState("");
   // updates the selectedSong when the add song button is pressed in li items, also checks for doubles.
   function handleAddSong(gatheredSongData) {
     // takes the previous object with some, returns true if it contains the ID of the gatheredSongData object
