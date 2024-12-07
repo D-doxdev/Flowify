@@ -1,6 +1,6 @@
 import "./App.css";
 import ListsContainer from "./ListsContainer/ListsContainer";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { ShaderGradientCanvas, ShaderGradient } from "@shadergradient/react";
 import SearchBarComponent from "./SearchBarComponent";
 import { url, getReturnedParamsFromSpotifyAuth } from "../spotify_API_data";
@@ -21,6 +21,9 @@ function App() {
   const [userAccessToken, setUserAccessToken] = useState("");
   const [userTokenType, setUserTokenType] = useState("");
   const [userTokenExpireTime, setUserTokenExpireTime] = useState("");
+
+  // useRef for controller of API calls
+  const controllerRef = useRef(null);
 
   useEffect(() => {
     if (window.location.hash) {
@@ -86,8 +89,24 @@ function App() {
     }
   }, []);
 
+  // clears the array when the field is empty, couldn't succeed in clearing all the calls when the search field is empty so it's a temporary solution that works as long as the get requests doesn't take longer than 1 sec to fulfill
+  useEffect(() => {
+    setTimeout(() => {
+      searchData == "" && setMusicSearchResult([]);
+    }, "1000");
+  }, [searchData]);
+
   // search function for finding songs! I left off here 4 Dec 2024. https://www.youtube.com/watch?v=1PWDxgqLmDA
   async function search() {
+    // Controller for aborting existing fetch requests
+    const controller = new AbortController();
+    const signal = controller.signal;
+    // checks if there's an existing request and aborts
+    if (controllerRef.current || searchData == "") {
+      controllerRef.current.abort(); // Cancel the previous request
+      // to test the abort: console.log("A API fetch call was aborted");
+    }
+    controllerRef.current = controller; // Store the new controller
     // test if the input value works console.log("search for " + searchData);
     // Get request using search to get the artist ID
     try {
@@ -97,6 +116,7 @@ function App() {
           "Content-Type": "application/json",
           Authorization: "Bearer " + accessToken,
         },
+        signal,
       };
       var artistID = await fetch(
         "https://api.spotify.com/v1/search?q=" + searchData + "&type=artist",
@@ -113,7 +133,17 @@ function App() {
         searchParameters,
       )
         .then((response) => response.json())
-        .then((data) => setMusicSearchResult(data.tracks));
+        .then((data) => {
+          // Delay setting the state with a 1-second timeout
+          if (searchData !== "") {
+            return new Promise((resolve) => {
+              setTimeout(() => {
+                setMusicSearchResult(data.tracks);
+                resolve();
+              }, 300); // 1-second delay
+            });
+          }
+        });
     } catch (error) {
       console.log(
         "Song request failed! Please enter an artist name into the search field or reload the webpage.",

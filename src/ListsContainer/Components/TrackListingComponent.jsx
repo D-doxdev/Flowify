@@ -20,15 +20,21 @@ function TrackListingComponent({
     />
   ));
   return (
-    <div className="relative flex h-auto grow">
+    <div className="relative flex h-auto w-2/5">
       <h1 className="absolute -top-16 mb-3 text-4xl text-slate-100 md:-top-20 md:text-6xl">
-        Songs
+        Top songs
       </h1>
       <div className="h-4/5 flex-grow overflow-y-scroll scrollbar-hide">
-        <ul className="">
-          {/* uses a plugin https://www.npmjs.com/package/tailwind-scrollbar-hide */}
-          {songList}
-        </ul>
+        {musicSearchResult.length == 0 ? (
+          <p className="ml-2 text-slate-100 text-opacity-50">
+            no songs loaded..
+          </p>
+        ) : (
+          <ul className="">
+            {/* uses a plugin https://www.npmjs.com/package/tailwind-scrollbar-hide */}
+            {songList}
+          </ul>
+        )}
       </div>
     </div>
   );

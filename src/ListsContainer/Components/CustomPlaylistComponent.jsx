@@ -34,7 +34,7 @@ function CustomPlaylistComponent({
   }, []);
 */
   return (
-    <div className="relative flex h-auto grow">
+    <div className="relative flex h-auto w-1/2">
       <div className="h-4/5 flex-grow overflow-y-scroll scrollbar-hide">
         <ul>
           {/* uses a plugin https://www.npmjs.com/package/tailwind-scrollbar-hide */}
