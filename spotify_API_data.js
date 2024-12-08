@@ -1,4 +1,4 @@
-var redirect_uri = "http://localhost:5173/";
+var redirect_uri = "https://nicholas-jammming-project.netlify.app/";
 
 // Encouraged to use by spotify to increase the safety of implicit grant
 function generateRandomString(length) {
