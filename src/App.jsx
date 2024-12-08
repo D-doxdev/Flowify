@@ -221,9 +221,7 @@ function App() {
         );
       })
       .then((response) => response.json())
-      .then((trackData) => {
-        console.log("Tracks added:", trackData);
-      })
+      //.then(setSelectedSong([]))
       .catch((error) => console.log("Error:", error));
   }
 
