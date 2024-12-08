@@ -24,25 +24,22 @@ function SongInfoComponent({
     selectedSong.some((song) => song.songId == songId),
   );
 
-  // used to determine if the li is added to the list or not, the buttons are dependent, was buggy and replaced with the state and callback function above
-  /*
-  useEffect(() => {
-    console.log("the component " + songId + " is re-rendered!");
-    if (!isInCustomPlaylist) {
-      function checkIfAddedToList() {
-        const checkedSongId = selectedSong.some(
-          (song) => song.songId === songId,
-        );
-        if (checkedSongId) {
-          setIsAddedToList(checkedSongId);
-        } else {
-          return;
-        }
-      }
-      checkIfAddedToList();
+  // Desired length of the artist and album text
+  const [maxLengthOfChars] = useState(70);
+
+  // helperfunc for truncating a string to a specific length and adding "..." after!
+
+  function gfgFun(str, maxLengthOfChars) {
+    if (str.length > maxLengthOfChars) {
+      return `${str.substring(0, maxLengthOfChars)}...`;
+    } else {
+      return str;
     }
-  }, []);
-  */
+  }
+
+  // Desired length of a string
+  const maxLength = 5;
+  // END
 
   function handleGatherSongData() {
     const songData = { songId, trackName, artistName, albumName, uri };
@@ -81,16 +78,26 @@ function SongInfoComponent({
     return (
       <li className="mb-3 flex flex-row items-center rounded-md border border-gray-100 border-opacity-5 bg-slate-300 bg-opacity-0 bg-clip-padding px-5 py-3 backdrop-blur-lg backdrop-filter">
         <div>
-          <h3 className="mb-3 text-xl text-slate-100">{trackName}</h3>
-          <div className="flex flex-row items-center">
-            <span className="mr-1 text-sm text-slate-300">
-              <SpatialAudioIcon fontSize="small" />
-            </span>
-            <h4 className="mr-2 text-slate-300">{artistName}</h4>
-            <span className="mr-1 text-slate-300">
-              <LibraryMusicIcon fontSize="small" />
-            </span>
-            <h4 className="text-slate-300">{albumName}</h4>
+          <h3 className="mb-3 text-xl text-slate-100">
+            {gfgFun(trackName, maxLengthOfChars)}
+          </h3>
+          <div className="">
+            <div className="mb-2 flex flex-row items-center">
+              <span className="mr-2 text-sm text-slate-300">
+                <SpatialAudioIcon fontSize="small" />
+              </span>
+              <h4 className="mr-2 text-slate-300">
+                {gfgFun(artistName, maxLengthOfChars)}
+              </h4>
+            </div>
+            <div className="flex flex-row items-center">
+              <span className="mr-2 text-slate-300">
+                <LibraryMusicIcon fontSize="small" />
+              </span>
+              <h4 className="text-slate-300">
+                {gfgFun(albumName, maxLengthOfChars)}
+              </h4>
+            </div>
           </div>
         </div>
         {removeFromListButton}
@@ -100,16 +107,26 @@ function SongInfoComponent({
     return (
       <li className="mb-3 flex flex-row items-center rounded-md border border-gray-100 border-opacity-5 bg-slate-300 bg-opacity-0 bg-clip-padding px-5 py-3 backdrop-blur-lg backdrop-filter">
         <div>
-          <h3 className="mb-3 text-xl text-slate-100">{trackName}</h3>
-          <div className="flex flex-row items-center">
-            <span className="mr-1 text-sm text-slate-300">
-              <SpatialAudioIcon fontSize="small" />
-            </span>
-            <h4 className="mr-2 text-slate-300">{artistName}</h4>
-            <span className="mr-1 text-slate-300">
-              <LibraryMusicIcon fontSize="small" />
-            </span>
-            <h4 className="text-slate-300">{albumName}</h4>
+          <h3 className="mb-3 text-xl text-slate-100">
+            {gfgFun(trackName, maxLengthOfChars)}
+          </h3>
+          <div className="">
+            <div className="mb-2 flex flex-row items-center">
+              <span className="mr-2 text-sm text-slate-300">
+                <SpatialAudioIcon fontSize="small" />
+              </span>
+              <h4 className="mr-2 text-slate-300">
+                {gfgFun(artistName, maxLengthOfChars)}
+              </h4>
+            </div>
+            <div className="flex flex-row items-center">
+              <span className="mr-2 text-slate-300">
+                <LibraryMusicIcon fontSize="small" />
+              </span>
+              <h4 className="text-slate-300">
+                {gfgFun(albumName, maxLengthOfChars)}
+              </h4>
+            </div>
           </div>
         </div>
         {isAddedToList ? isSelectedButton : addToListButton}

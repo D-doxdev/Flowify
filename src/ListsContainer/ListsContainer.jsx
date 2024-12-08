@@ -53,7 +53,7 @@ function ListsContainer({
 
   // This is a container component, only call instances and pass props, doesn't render own JSX.
   return (
-    <div className="flex h-3/4 w-full flex-row flex-nowrap gap-5">
+    <div className="flex h-full w-full flex-col flex-nowrap gap-5 md:h-3/4 md:flex-row">
       {/* Passes dummyData to component */}
       <TrackListingComponent
         dummyData={dummyData}

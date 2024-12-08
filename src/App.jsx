@@ -221,12 +221,13 @@ function App() {
         );
       })
       .then((response) => response.json())
-      //.then(setSelectedSong([]))
+      .then(setSelectedSong([]))
+      .then(setPlaylistInput(""))
       .catch((error) => console.log("Error:", error));
   }
 
   return (
-    <div className="h-dvh w-full overflow-hidden px-10">
+    <div className="h-dvh w-full px-10 md:overflow-hidden">
       <ShaderGradientCanvas
         style={{
           position: "absolute",
