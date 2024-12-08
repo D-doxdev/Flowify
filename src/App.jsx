@@ -180,7 +180,7 @@ function App() {
 
         const playlistBody = JSON.stringify({
           collaborative: false,
-          description: "A playlist created via Spotify API",
+          description: "A playlist created via Flowify",
           name: playlistInput,
           public: true,
         });
@@ -227,10 +227,10 @@ function App() {
   }
 
   return (
-    <div className="h-dvh w-full px-10 md:overflow-hidden">
+    <div className="h-dvh w-full px-3 sm:px-10 md:overflow-hidden">
       <ShaderGradientCanvas
         style={{
-          position: "absolute",
+          position: "fixed",
           top: 0,
           left: 0,
           zIndex: -1,
