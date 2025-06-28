@@ -1,5 +1,3 @@
-# Jammming docs
-
 # Project install & dependencies
 
 ## React + Vite
